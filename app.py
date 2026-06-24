@@ -15,7 +15,7 @@ SHEET_ID = "1mXmOaTeDXEfelXB8gBe98R1lvCZPvZQNGpCeCX_HFv4"
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 SESSION_SECRET = os.environ.get("SESSION_SECRET", secrets.token_hex(32))
-ALLOWED_DOMAIN = "roofstock.com"
+ALLOWED_DOMAINS = ["roofstock.com", "vuestay.com"]
 WHITELIST_SHEET_ID = "1hKIa2MTyG3ZBXPZ0g5UU8H4FdQyDEiO73kd6OgMFrAE"
 SLACK_WEBHOOK = os.environ.get("SLACK_WEBHOOK_URL") or ""
 
@@ -144,8 +144,9 @@ def is_allowed(email, whitelist):
         return False
     if email.lower() in whitelist:
         return True
-    if email.endswith(f"@{ALLOWED_DOMAIN}"):
-        return True
+    for domain in ALLOWED_DOMAINS:
+        if email.endswith(f"@{domain}"):
+            return True
     return False
 
 # ==============================================================
