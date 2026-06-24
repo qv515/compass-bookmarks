@@ -261,6 +261,14 @@ def request_access():
 def health():
     return "ok", 200
 
+@app.route("/refresh")
+def refresh():
+    """Cron-job hits this every hour to force a data refresh from the sheet."""
+    refresh_all()
+    with BOOKMARKS_LOCK:
+        total = sum(len(items) for _, items in BOOKMARKS)
+    return jsonify({"status": "ok", "sections": len(BOOKMARKS), "bookmarks": total})
+
 # ==============================================================
 # API — JSON data for the frontend
 # ==============================================================
@@ -282,7 +290,7 @@ def api_bookmarks():
 
 @app.before_request
 def check_auth():
-    allowed_routes = {"login", "callback", "static", "request_access", "debug", "health", "api_bookmarks"}
+    allowed_routes = {"login", "callback", "static", "request_access", "debug", "health", "refresh", "api_bookmarks"}
     if request.endpoint in allowed_routes or request.path.startswith("/login"):
         return
     if not session.get("user"):
