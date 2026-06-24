@@ -269,6 +269,18 @@ def refresh():
         total = sum(len(items) for _, items in BOOKMARKS)
     return jsonify({"status": "ok", "sections": len(BOOKMARKS), "bookmarks": total})
 
+@app.route("/debug")
+def debug():
+    """Check service account, whitelist status, bookmark count."""
+    info = {
+        "service_account_loaded": SERVICE_ACCOUNT_INFO is not None,
+        "whitelist_count": len(WHITELIST),
+        "whitelist_emails": sorted(WHITELIST) if WHITELIST else [],
+        "slack_configured": bool(SLACK_WEBHOOK),
+        "bookmark_sections": len(BOOKMARKS),
+    }
+    return f"<pre>{json.dumps(info, indent=2)}</pre>"
+
 # ==============================================================
 # API — JSON data for the frontend
 # ==============================================================
