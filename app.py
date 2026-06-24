@@ -477,14 +477,12 @@ def index():
       margin-left: auto;
       margin-right: 0.5rem;
     }}
-    .section-toggle {{
-      font-size: 0.65rem; color: #4B5563;
-      transition: transform 0.2s ease;
-      flex-shrink: 0;
-    }}
-    .section-toggle.open {{
-      transform: rotate(180deg);
-    }}
+    .section-indicator {{
+        font-size: 0.65rem; color: #4B5563;
+        flex-shrink: 0;
+        line-height: 1;
+        transition: color 0.15s;
+      }}
 
     /* Collapsible card list */
     .card-list {{
@@ -715,16 +713,14 @@ function render() {{
     totalItems += items.length;
     const color = SECTION_COLORS[sec.section] || DEFAULT_COLOR;
     const collapsed = sessionStorage.getItem(getCollapsedKey(sec.section)) === '1';
-    const toggleArrow = collapsed ? '▸' : '▾';
 
-    html += `<div class="section">
-      <div class="section-header" data-section="${{sec.section}}">
-        <div class="section-dot" style="background:${{color}}"></div>
-        <div class="section-title">${{sec.section}}</div>
-        <div class="section-count">${{items.length}} bookmark${{items.length !== 1 ? 's' : ''}}</div>
-        <div class="section-toggle ${{collapsed ? '' : 'open'}}">▾</div>
-      </div>
-      <div class="card-list ${{collapsed ? 'collapsed' : ''}}">`;
+        html += `<div class="section">
+                  <div class="section-header" data-section="${{sec.section}}">
+                    <span class="section-indicator" style="color:${{color}}">${{collapsed ? '▶' : '▼'}}</span>
+                    <div class="section-title">${{sec.section}}</div>
+                    <div class="section-count">${{items.length}} bookmark${{items.length !== 1 ? 's' : ''}}</div>
+                  </div>
+              <div class="card-list ${{collapsed ? 'collapsed' : ''}}">`;
 
     for (const item of items) {{
       const icon = item.link.includes('docs.google.com') ? '📄'
@@ -750,23 +746,23 @@ function render() {{
   container.innerHTML = html || '<div class="no-results">No bookmarks match your current view.</div>';
 
   // Attach collapse handlers
-  container.querySelectorAll('.section-header').forEach(header => {{
-    header.addEventListener('click', () => {{
-      const name = header.dataset.section;
-      const list = header.nextElementSibling;
-      const toggle = header.querySelector('.section-toggle');
-      const was = sessionStorage.getItem(getCollapsedKey(name));
-      if (was === '1') {{
-        sessionStorage.removeItem(getCollapsedKey(name));
-        list.classList.remove('collapsed');
-        toggle.classList.add('open');
-      }} else {{
-        sessionStorage.setItem(getCollapsedKey(name), '1');
-        list.classList.add('collapsed');
-        toggle.classList.remove('open');
-      }}
+    container.querySelectorAll('.section-header').forEach(header => {{
+      header.addEventListener('click', () => {{
+        const name = header.dataset.section;
+        const list = header.nextElementSibling;
+        const indicator = header.querySelector('.section-indicator');
+        const was = sessionStorage.getItem(getCollapsedKey(name));
+        if (was === '1') {{
+          sessionStorage.removeItem(getCollapsedKey(name));
+          list.classList.remove('collapsed');
+          indicator.textContent = '▼';
+        }} else {{
+          sessionStorage.setItem(getCollapsedKey(name), '1');
+          list.classList.add('collapsed');
+          indicator.textContent = '▶';
+        }}
+      }});
     }});
-  }});
 
   const qtext = q ? ` (filtered to ${{totalItems}})` : '';
   document.getElementById('stats').textContent =
