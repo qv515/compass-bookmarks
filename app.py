@@ -424,33 +424,82 @@ def index():
   }}
   .search-input::placeholder {{ color: #94A3B8; }}
 
-  /* Section */
-  .section {{
-    margin-bottom: 3rem;
+  /* Filter chips */
+  .filter-bar {{
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1.5rem;
   }}
-  .section-header {{
-    display: flex; align-items: center; gap: 0.75rem;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid #334155;
+  .filter-chip {{
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    background: #1F2937; border: 1px solid #334155;
+    border-radius: 20px;
+    font-size: 0.8rem; font-weight: 500; color: #CBD5E1;
+    cursor: pointer; transition: all 0.15s;
+    user-select: none;
   }}
-  .section-dot {{
-    width: 10px; height: 10px; border-radius: 50%;
-    flex-shrink: 0;
+  .filter-chip:hover {{
+    border-color: #4B5563;
   }}
-  .section-title {{
-    font-size: 1.15rem; font-weight: 600; color: #CBD5E1;
-    text-transform: uppercase; letter-spacing: 0.06em;
+  .filter-chip.active {{
+    background: rgba(255,187,51,0.15);
+    border-color: #FFBB33;
+    color: #FFBB33;
   }}
-  .section-count {{
-    font-size: 0.8rem; color: #94A3B8;
-    margin-left: auto;
-  }}
+  .filter-chip input {{ display: none; }}
 
-  /* Bookmark cards — single column, button on right */
-  .card-list {{
-    display: flex; flex-direction: column; gap: 0.75rem;
-  }}
+  /* Section */
+    .section {{
+      margin-bottom: 2rem;
+    }}
+    .section-header {{
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #334155;
+      cursor: pointer;
+      user-select: none;
+    }}
+    .section-header:hover .section-title {{
+      color: #F1F5F9;
+    }}
+    .section-dot {{
+      width: 10px; height: 10px; border-radius: 50%;
+      flex-shrink: 0;
+    }}
+    .section-title {{
+      font-size: 1.15rem; font-weight: 600; color: #CBD5E1;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      transition: color 0.15s;
+    }}
+    .section-count {{
+      font-size: 0.8rem; color: #94A3B8;
+      margin-left: auto;
+      margin-right: 0.5rem;
+    }}
+    .section-toggle {{
+      font-size: 0.65rem; color: #4B5563;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }}
+    .section-toggle.open {{
+      transform: rotate(180deg);
+    }}
+
+    /* Collapsible card list */
+    .card-list {{
+      display: flex; flex-direction: column; gap: 0.75rem;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.2s ease;
+      max-height: 2000px;
+      opacity: 1;
+    }}
+    .card-list.collapsed {{
+      max-height: 0;
+      opacity: 0;
+      margin: 0;
+      gap: 0;
+    }}
   .card {{
     background: #1F2937;
     border: 1px solid #334155;
@@ -539,6 +588,8 @@ def index():
     <input class="search-input" id="searchInput" type="text" placeholder="Search bookmarks by title, section, or description…" autocomplete="off">
   </div>
 
+  <div class="filter-bar" id="filterBar"></div>
+
   <div id="content"><div class="no-results">Loading bookmarks…</div></div>
 
   <div class="stats" id="stats"></div>
@@ -554,8 +605,13 @@ const SECTION_COLORS = {{
 }};
 
 const DEFAULT_COLOR = "#CBD5E1";
+const SEARCH_KEY = 'str_search';
+const FILTER_KEY = 'str_filters';
+const COLLAPSE_KEY = 'str_collapsed';
 
-const SEARCH_HISTORY_KEY = 'str_bookmarks_search';
+let allSections = [];
+let activeFilters = new Set();
+let currentQuery = '';
 
 // Load bookmarks
 async function loadBookmarks() {{
@@ -563,28 +619,87 @@ async function loadBookmarks() {{
     const resp = await fetch('/api/bookmarks');
     if (resp.status === 401) {{ window.location.href = '/'; return; }}
     const data = await resp.json();
-    renderBookmarks(data.sections);
-    setupSearch(data.sections);
+    allSections = data.sections || [];
+    initFilters();
+    render();
+    setupSearch();
   }} catch(e) {{
     document.getElementById('content').innerHTML = '<div class="no-results">Failed to load bookmarks. Please try again.</div>';
   }}
 }}
 
-function renderBookmarks(sections, query) {{
-  const container = document.getElementById('content');
-  const q = (query || '').toLowerCase().trim();
-  let totalItems = 0;
+// Initialize filters from session storage or all on
+function initFilters() {{
+  const saved = sessionStorage.getItem(FILTER_KEY);
+  if (saved) {{
+    try {{
+      const arr = JSON.parse(saved);
+      activeFilters = new Set(arr);
+      // Prune stale sections
+      const valid = new Set(allSections.map(s => s.section));
+      for (const f of activeFilters) {{
+        if (!valid.has(f)) activeFilters.delete(f);
+      }}
+    }} catch {{}}
+  }}
+  if (activeFilters.size === 0) {{
+    activeFilters = new Set(allSections.map(s => s.section));
+  }}
+  renderFilters();
+}}
 
-  if (!sections || sections.length === 0) {{
+function renderFilters() {{
+  const bar = document.getElementById('filterBar');
+  bar.innerHTML = '';
+  for (const sec of allSections) {{
+    const name = sec.section;
+    const color = SECTION_COLORS[name] || DEFAULT_COLOR;
+    const active = activeFilters.has(name);
+    const chip = document.createElement('label');
+    chip.className = 'filter-chip' + (active ? ' active' : '');
+    chip.innerHTML = `<input type="checkbox" ${{active ? 'checked' : ''}}><span class="section-dot" style="width:8px;height:8px;background:${{color}};border-radius:50%;display:inline-block"></span> ${{name}}`;
+    chip.addEventListener('click', (e) => {{
+      if (e.target.tagName === 'INPUT') return;
+      const cb = chip.querySelector('input');
+      cb.checked = !cb.checked;
+      toggleFilter(name, cb.checked);
+    }});
+    chip.querySelector('input').addEventListener('change', (e) => {{
+      toggleFilter(name, e.target.checked);
+    }});
+    bar.appendChild(chip);
+  }}
+}}
+
+function toggleFilter(name, on) {{
+  if (on) activeFilters.add(name);
+  else activeFilters.delete(name);
+  sessionStorage.setItem(FILTER_KEY, JSON.stringify([...activeFilters]));
+  renderFilters();
+  render();
+}}
+
+function getCollapsedKey(name) {{
+  return COLLAPSE_KEY + ':' + name;
+}}
+
+function render() {{
+  const container = document.getElementById('content');
+  const q = currentQuery.toLowerCase().trim();
+  let totalItems = 0;
+  let anyVisible = false;
+
+  if (!allSections || allSections.length === 0) {{
     container.innerHTML = '<div class="no-results">No bookmarks found.</div>';
     document.getElementById('stats').textContent = '';
     return;
   }}
 
   let html = '';
-  let filteredTotal = 0;
 
-  for (const sec of sections) {{
+  for (const sec of allSections) {{
+    if (!activeFilters.has(sec.section)) continue;
+
     let items = sec.items;
     if (q) {{
       items = items.filter(item =>
@@ -596,17 +711,20 @@ function renderBookmarks(sections, query) {{
     }}
     if (items.length === 0) continue;
 
-    filteredTotal += items.length;
-    totalItems += sec.items.length;
+    anyVisible = true;
+    totalItems += items.length;
     const color = SECTION_COLORS[sec.section] || DEFAULT_COLOR;
+    const collapsed = sessionStorage.getItem(getCollapsedKey(sec.section)) === '1';
+    const toggleArrow = collapsed ? '▸' : '▾';
 
     html += `<div class="section">
-      <div class="section-header">
+      <div class="section-header" data-section="${{sec.section}}">
         <div class="section-dot" style="background:${{color}}"></div>
         <div class="section-title">${{sec.section}}</div>
         <div class="section-count">${{items.length}} bookmark${{items.length !== 1 ? 's' : ''}}</div>
+        <div class="section-toggle ${{collapsed ? '' : 'open'}}">▾</div>
       </div>
-      <div class="card-list">`;
+      <div class="card-list ${{collapsed ? 'collapsed' : ''}}">`;
 
     for (const item of items) {{
       const icon = item.link.includes('docs.google.com') ? '📄'
@@ -629,33 +747,46 @@ function renderBookmarks(sections, query) {{
     html += `</div></div>`;
   }}
 
-  if (!html) {{
-    container.innerHTML = '<div class="no-results">No bookmarks match your search.</div>';
-  }} else {{
-    container.innerHTML = html;
-  }}
+  container.innerHTML = html || '<div class="no-results">No bookmarks match your current view.</div>';
 
-  const qtext = q ? ` (filtered to ${{filteredTotal}})` : '';
+  // Attach collapse handlers
+  container.querySelectorAll('.section-header').forEach(header => {{
+    header.addEventListener('click', () => {{
+      const name = header.dataset.section;
+      const list = header.nextElementSibling;
+      const toggle = header.querySelector('.section-toggle');
+      const was = sessionStorage.getItem(getCollapsedKey(name));
+      if (was === '1') {{
+        sessionStorage.removeItem(getCollapsedKey(name));
+        list.classList.remove('collapsed');
+        toggle.classList.add('open');
+      }} else {{
+        sessionStorage.setItem(getCollapsedKey(name), '1');
+        list.classList.add('collapsed');
+        toggle.classList.remove('open');
+      }}
+    }});
+  }});
+
+  const qtext = q ? ` (filtered to ${{totalItems}})` : '';
   document.getElementById('stats').textContent =
-    `${{filteredTotal || totalItems}} bookmark${{(filteredTotal || totalItems) !== 1 ? 's' : ''}} across ${{sections.length}} departments${{qtext}}`;
+    `${{totalItems}} bookmark${{totalItems !== 1 ? 's' : ''}} across ${{[...activeFilters].filter(f => allSections.some(s => s.section === f)).length}} departments${{qtext}}`;
 }}
 
-function setupSearch(sections) {{
+function setupSearch() {{
   const input = document.getElementById('searchInput');
-  // Restore last search
-  const saved = sessionStorage.getItem(SEARCH_HISTORY_KEY);
+  const saved = sessionStorage.getItem(SEARCH_KEY);
   if (saved) {{
     input.value = saved;
-    renderBookmarks(sections, saved);
+    currentQuery = saved;
   }}
-
   let debounceTimer;
   input.addEventListener('input', () => {{
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {{
-      const q = input.value;
-      sessionStorage.setItem(SEARCH_HISTORY_KEY, q);
-      renderBookmarks(sections, q);
+      currentQuery = input.value;
+      sessionStorage.setItem(SEARCH_KEY, currentQuery);
+      render();
     }}, 200);
   }});
 }}
