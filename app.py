@@ -245,7 +245,7 @@ def callback():
             <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" style="max-width:200px;margin-bottom:2rem">
             <h1 style="font-size:1.1rem;font-weight:600;color:#F1F5F9;margin-bottom:0.5rem">{email} is not authorized</h1>
             <p style="color:#94a3b8;margin-bottom:1.5rem;font-size:0.9rem">Request access and an admin will review your request.</p>
-            <button onclick="fetch('/request-access?email={encoded}',{{method:'POST'}}).then(r=>r.text()).then(t=>document.getElementById('msg').textContent=t)" style="padding:0.75rem 2.5rem;background:#FFBB33;color:#0F172A;border:0;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer">Request Access</button>
+            <button onclick="fetch('/request-access?email={encoded}',{{method:'POST'}}).then(r=>r.text()).then(t=>document.getElementById('msg').textContent=t)" style="padding:0.75rem 2.5rem;background:#438ECA;color:#0F172A;border:0;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer">Request Access</button>
             <p id="msg" style="color:#22c55e;margin-top:1rem;font-size:0.85rem"></p>
             <a href="/" style="display:inline-block;margin-top:1rem;color:#64748b;text-decoration:none;font-size:0.85rem">&larr; Back to sign in</a>
             </div></body></html>""", 403
@@ -347,7 +347,7 @@ def index():
     color: #F1F5F9;
     min-height: 100vh;
   }}
-  ::selection {{ background: #FFBB3344; color: #FFBB33; }}
+  ::selection {{ background: #438ECA44; color: #438ECA; }}
 
   /* Scrollbar */
   ::-webkit-scrollbar {{ width: 6px; }}
@@ -400,7 +400,7 @@ def index():
   }}
   .hero h1 {{
     font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em;
-    color: #FFBB33;
+    color: #438ECA;
     margin-bottom: 0.5rem;
   }}
   .hero p {{
@@ -420,7 +420,7 @@ def index():
     outline: none; transition: all 0.2s;
   }}
   .search-input:focus {{
-    border-color: #FFBB33; box-shadow: 0 0 0 3px #FFBB3322;
+    border-color: #438ECA; box-shadow: 0 0 0 3px #438ECA22;
   }}
   .search-input::placeholder {{ color: #94A3B8; }}
 
@@ -442,9 +442,9 @@ def index():
     border-color: #4B5563;
   }}
   .filter-chip.active {{
-    background: rgba(255,187,51,0.15);
-    border-color: #FFBB33;
-    color: #FFBB33;
+    background: rgba(67,142,202,0.15);
+    border-color: #438ECA;
+    color: #438ECA;
   }}
   .filter-chip input {{ display: none; }}
 
@@ -526,14 +526,14 @@ def index():
   .card-link {{
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #FFBB33; color: #0F172A;
+    background: #438ECA; color: #0F172A;
     border-radius: 8px;
     font-size: 0.8rem; font-weight: 600;
     text-decoration: none; transition: all 0.2s;
     flex-shrink: 0;
   }}
   .card-link:hover {{
-    background: #FFC44D; transform: translateY(-1px);
+    background: #5A9ED4; transform: translateY(-1px);
   }}
   .card-link svg {{
     width: 14px; height: 14px; flex-shrink: 0;
@@ -828,14 +828,14 @@ LOGIN_PAGE = """<!DOCTYPE html>
   }
   .btn-google {
     display: inline-flex; align-items: center; gap: 0.75rem;
-    padding: 0.85rem 2rem; background: #FFBB33; color: #0F172A;
+    padding: 0.85rem 2rem; background: #438ECA; color: #0F172A;
     border: 0; border-radius: 10px; font-weight: 600;
     font-size: 0.95rem; cursor: pointer; text-decoration: none;
     transition: all 0.2s;
   }
   .btn-google:hover {
-    background: #FFC44D; transform: translateY(-1px);
-    box-shadow: 0 8px 25px -6px rgba(255,187,51,0.3);
+    background: #5A9ED4; transform: translateY(-1px);
+    box-shadow: 0 8px 25px -6px rgba(67,142,202,0.3);
   }
   .btn-google svg { width: 20px; height: 20px; }
   .domain-hint {
