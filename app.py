@@ -329,7 +329,7 @@ def check_auth():
 @app.route("/")
 def index():
     user = session.get("user", {})
-    user_json = json.dumps(user.get("email", ""))
+    user_email = user.get("email", "")
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -404,7 +404,7 @@ def index():
     margin-bottom: 0.5rem;
   }}
   .hero p {{
-    font-size: 1.05rem; color: #CBD5E1; max-width: 600px;
+    font-size: 1.05rem; color: #CBD5E1; max-width: 800px;
     line-height: 1.6;
   }}
 
@@ -570,7 +570,7 @@ def index():
       <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img">
     </div>
     <div class="header-actions">
-      <span class="user-email" id="userEmail">{user_json}</span>
+      <span class="user-email" id="userEmail">{user_email}</span>
       <a href="/logout" class="btn-logout">Sign out</a>
     </div>
   </div>
