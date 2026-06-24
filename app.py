@@ -723,11 +723,13 @@ function render() {{
               <div class="card-list ${{collapsed ? 'collapsed' : ''}}">`;
 
     for (const item of items) {{
-      const icon = item.link.includes('docs.google.com') ? '📄'
-        : item.link.includes('sheets.google.com') ? '📊'
-        : item.link.includes('drive.google.com') ? '📁'
-        : item.link.includes('render.com') ? '⚡'
-        : '🔗';
+      const url = item.link.toLowerCase();
+            const icon = url.includes('spreadsheet') ? '📊'
+              : url.includes('sheets.google.com') ? '📊'
+              : url.includes('docs.google.com') ? '📄'
+              : url.includes('drive.google.com') ? '📁'
+              : url.includes('render.com') ? '⚡'
+              : '🔗';
       html += `<div class="card">
         <div class="card-body">
           <div class="card-title">${{icon}} ${{item.title}}</div>
