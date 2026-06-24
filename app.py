@@ -32,6 +32,7 @@ if sa_json:
 # --- In-memory cache ---
 BOOKMARKS = []
 BOOKMARKS_LOCK = threading.Lock()
+LAST_FETCH_ERROR = None
 LAST_FETCH_TIME = None
 
 # --- Flask ---
@@ -44,6 +45,7 @@ app.secret_key = SESSION_SECRET
 
 def _sheets_api_read(spreadsheet_id, sheet_range):
     """Read a range from Google Sheets using service account JWT auth (no extra deps)."""
+    global LAST_FETCH_ERROR
     if not SERVICE_ACCOUNT_INFO:
         return None
     try:
@@ -76,11 +78,13 @@ def _sheets_api_read(spreadsheet_id, sheet_range):
         req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
         with urllib.request.urlopen(req, timeout=15) as resp:
             return json.loads(resp.read().decode())
-    except ImportError:
-        print("pyjwt not installed", flush=True)
+    except ImportError as e:
+        LAST_FETCH_ERROR = f"pyjwt not installed: {e}"
+        print(LAST_FETCH_ERROR, flush=True)
         return None
     except Exception as e:
-        print(f"Sheets API error: {e}", flush=True)
+        LAST_FETCH_ERROR = f"Sheets API error: {e}"
+        print(LAST_FETCH_ERROR, flush=True)
         return None
 
 def fetch_whitelist():
@@ -274,10 +278,12 @@ def debug():
     """Check service account, whitelist status, bookmark count."""
     info = {
         "service_account_loaded": SERVICE_ACCOUNT_INFO is not None,
+        "service_account_email": SERVICE_ACCOUNT_INFO.get("client_email", "") if SERVICE_ACCOUNT_INFO else "",
         "whitelist_count": len(WHITELIST),
         "whitelist_emails": sorted(WHITELIST) if WHITELIST else [],
         "slack_configured": bool(SLACK_WEBHOOK),
         "bookmark_sections": len(BOOKMARKS),
+        "last_fetch_error": LAST_FETCH_ERROR,
     }
     return f"<pre>{json.dumps(info, indent=2)}</pre>"
 
