@@ -326,6 +326,104 @@ def check_auth():
     if not session.get("user"):
         return LOGIN_PAGE, 401
 
+@app.route("/dashboard")
+def dashboard():
+    user = session.get("user", {})
+    user_email = user.get("email", "")
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard · STR Bookmarks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0F172A;
+    color: #F1F5F9;
+    min-height: 100vh;
+  }}
+  .header {{
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(16px) saturate(1.5);
+    -webkit-backdrop-filter: blur(16px) saturate(1.5);
+    border-bottom: 1px solid #334155;
+    padding: 0 2rem;
+  }}
+  .header-inner {{
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }}
+  .logo {{ display: flex; align-items: center; }}
+  .logo-img {{ max-height: 28px; width: auto; }}
+  .header-nav {{ display: flex; align-items: center; gap: 0.25rem; }}
+  .nav-btn {{
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.4rem 0.85rem; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 500;
+    color: #94A3B8; text-decoration: none; transition: all 0.15s;
+  }}
+  .nav-btn:hover {{ background: #1F2937; color: #CBD5E1; }}
+  .nav-btn.active {{ background: #1F2937; color: #438ECA; }}
+  .nav-btn svg {{ width: 16px; height: 16px; flex-shrink: 0; }}
+  .header-actions {{ display: flex; align-items: center; gap: 1rem; }}
+  .user-email {{ font-size: 0.8rem; color: #94A3B8; }}
+  .btn-logout {{
+    padding: 0.4rem 1rem; border-radius: 6px;
+    font-size: 0.8rem; font-weight: 500;
+    background: transparent; color: #94A3B8;
+    border: 1px solid #334155; cursor: pointer;
+    transition: all 0.2s; text-decoration: none;
+  }}
+  .btn-logout:hover {{ background: #334155; color: #F1F5F9; }}
+  .container {{ max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }}
+  .wip {{
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 4rem 2rem; text-align: center;
+  }}
+  .wip-icon {{ font-size: 3rem; margin-bottom: 1rem; opacity: 0.6; }}
+  .wip h2 {{ font-size: 1.5rem; font-weight: 700; color: #CBD5E1; margin-bottom: 0.5rem; }}
+  .wip p {{ font-size: 0.9rem; color: #64748B; }}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img">
+    </div>
+    <div class="header-nav">
+      <a href="/" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        Bookmarks
+      </a>
+      <a href="/dashboard" class="nav-btn active">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+    </div>
+    <div class="header-actions">
+      <span class="user-email">{user_email}</span>
+      <a href="/logout" class="btn-logout">Sign out</a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="wip">
+    <div class="wip-icon">🚧</div>
+    <h2>Work in Progress</h2>
+    <p>This dashboard is coming soon.</p>
+  </div>
+</div>
+</body>
+</html>"""
+
 @app.route("/")
 def index():
     user = session.get("user", {})
@@ -388,10 +486,34 @@ def index():
     text-decoration: none;
   }}
   .btn-logout:hover {{
-    background: #334155; color: #F1F5F9;
-  }}
+      background: #334155; color: #F1F5F9;
+    }}
 
-  /* Main content */
+    /* Nav */
+    .header-nav {{
+      display: flex; align-items: center; gap: 0.25rem;
+    }}
+    .nav-btn {{
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem; font-weight: 500;
+      color: #94A3B8;
+      text-decoration: none;
+      transition: all 0.15s;
+    }}
+    .nav-btn:hover {{
+      background: #1F2937; color: #CBD5E1;
+    }}
+    .nav-btn.active {{
+      background: #1F2937; color: #438ECA;
+    }}
+    .nav-btn svg {{
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+    }}
+
+    /* Main content */
   .container {{
     max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem 4rem;
   }}
@@ -568,6 +690,16 @@ def index():
   <div class="header-inner">
     <div class="logo">
       <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img">
+    </div>
+    <div class="header-nav">
+      <a href="/" class="nav-btn active">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        Bookmarks
+      </a>
+      <a href="/dashboard" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
     </div>
     <div class="header-actions">
       <span class="user-email" id="userEmail">{user_email}</span>
