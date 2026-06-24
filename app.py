@@ -35,6 +35,16 @@ BOOKMARKS_LOCK = threading.Lock()
 LAST_FETCH_ERROR = None
 LAST_FETCH_TIME = None
 
+# --- Logo ---
+LOGO_B64 = ""
+logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo_b64.txt")
+if os.path.exists(logo_path):
+    with open(logo_path) as f:
+        LOGO_B64 = f.read().strip()
+        print(f"Logo loaded: {len(LOGO_B64)} chars", flush=True)
+else:
+    print("Logo file not found", flush=True)
+
 # --- Flask ---
 app = Flask(__name__)
 app.secret_key = SESSION_SECRET
@@ -229,11 +239,12 @@ def callback():
             return "Email not provided", 400
         if not is_allowed(email, WHITELIST):
             encoded = urllib.parse.quote(email)
-            return f"""<html><body style="background:#0b1120;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem">
+            return f"""<html><body style="background:#17123b;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem">
             <div style="text-align:center;max-width:420px;width:100%">
+            <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" style="max-width:200px;margin-bottom:2rem">
             <h1 style="font-size:1.1rem;font-weight:600;color:#e2e8f0;margin-bottom:0.5rem">{email} is not authorized</h1>
             <p style="color:#94a3b8;margin-bottom:1.5rem;font-size:0.9rem">Request access and an admin will review your request.</p>
-            <button onclick="fetch('/request-access?email={encoded}',{{method:'POST'}}).then(r=>r.text()).then(t=>document.getElementById('msg').textContent=t)" style="padding:0.75rem 2.5rem;background:#f59e0b;color:black;border:0;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer">Request Access</button>
+            <button onclick="fetch('/request-access?email={encoded}',{{method:'POST'}}).then(r=>r.text()).then(t=>document.getElementById('msg').textContent=t)" style="padding:0.75rem 2.5rem;background:#bf8d36;color:#17123b;border:0;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer">Request Access</button>
             <p id="msg" style="color:#22c55e;margin-top:1rem;font-size:0.85rem"></p>
             <a href="/" style="display:inline-block;margin-top:1rem;color:#64748b;text-decoration:none;font-size:0.85rem">&larr; Back to sign in</a>
             </div></body></html>""", 403
@@ -323,7 +334,7 @@ def index():
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compass · Company Bookmarks</title>
+<title>Casago Bookmarks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -331,25 +342,25 @@ def index():
   *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0a0f1e;
+    background: #17123b;
     color: #e2e8f0;
     min-height: 100vh;
   }}
-  ::selection {{ background: #f59e0b44; color: #fbbf24; }}
+  ::selection {{ background: #bf8d3644; color: #bf8d36; }}
 
   /* Scrollbar */
   ::-webkit-scrollbar {{ width: 6px; }}
-  ::-webkit-scrollbar-track {{ background: #0a0f1e; }}
-  ::-webkit-scrollbar-thumb {{ background: #1e293b; border-radius: 3px; }}
-  ::-webkit-scrollbar-thumb:hover {{ background: #334155; }}
+  ::-webkit-scrollbar-track {{ background: #17123b; }}
+  ::-webkit-scrollbar-thumb {{ background: #2d2860; border-radius: 3px; }}
+  ::-webkit-scrollbar-thumb:hover {{ background: #3d3870; }}
 
   /* Header */
   .header {{
     position: sticky; top: 0; z-index: 100;
-    background: rgba(10, 15, 30, 0.85);
+    background: rgba(23, 18, 59, 0.85);
     backdrop-filter: blur(16px) saturate(1.5);
     -webkit-backdrop-filter: blur(16px) saturate(1.5);
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid #2d2860;
     padding: 0 2rem;
   }}
   .header-inner {{
@@ -358,32 +369,25 @@ def index():
     height: 64px;
   }}
   .logo {{
-    display: flex; align-items: center; gap: 10px;
-    font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;
+    display: flex; align-items: center;
   }}
-  .logo-icon {{
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; font-weight: 800; color: #0a0f1e;
-  }}
+  .logo-img {{ max-height: 28px; width: auto; }}
   .header-actions {{
     display: flex; align-items: center; gap: 1rem;
   }}
   .user-email {{
-    font-size: 0.8rem; color: #64748b;
+    font-size: 0.8rem; color: #6b6390;
   }}
   .btn-logout {{
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
     background: transparent; color: #94a3b8;
-    border: 1px solid #334155; cursor: pointer;
+    border: 1px solid #2d2860; cursor: pointer;
     transition: all 0.2s;
     text-decoration: none;
   }}
   .btn-logout:hover {{
-    background: #1e293b; color: #e2e8f0;
+    background: #1e1a4a; color: #e2e8f0;
   }}
 
   /* Main content */
@@ -395,14 +399,11 @@ def index():
   }}
   .hero h1 {{
     font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #bf8d36;
     margin-bottom: 0.5rem;
   }}
   .hero p {{
-    font-size: 1.05rem; color: #64748b; max-width: 600px;
+    font-size: 1.05rem; color: #6b6390; max-width: 600px;
     line-height: 1.6;
   }}
 
@@ -412,15 +413,15 @@ def index():
   }}
   .search-input {{
     width: 100%; padding: 0.85rem 1.25rem;
-    background: #131b2e; border: 1px solid #1e293b;
+    background: #1e1a4a; border: 1px solid #2d2860;
     border-radius: 10px; color: #e2e8f0;
     font-size: 0.95rem; font-family: 'Inter', sans-serif;
     outline: none; transition: all 0.2s;
   }}
   .search-input:focus {{
-    border-color: #f59e0b; box-shadow: 0 0 0 3px #f59e0b22;
+    border-color: #bf8d36; box-shadow: 0 0 0 3px #bf8d3622;
   }}
-  .search-input::placeholder {{ color: #475569; }}
+  .search-input::placeholder {{ color: #4a4580; }}
 
   /* Section */
   .section {{
@@ -430,18 +431,18 @@ def index():
     display: flex; align-items: center; gap: 0.75rem;
     margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid #2d2860;
   }}
   .section-dot {{
     width: 10px; height: 10px; border-radius: 50%;
     flex-shrink: 0;
   }}
   .section-title {{
-    font-size: 1.15rem; font-weight: 600; color: #94a3b8;
+    font-size: 1.15rem; font-weight: 600; color: #6b6390;
     text-transform: uppercase; letter-spacing: 0.06em;
   }}
   .section-count {{
-    font-size: 0.8rem; color: #475569;
+    font-size: 0.8rem; color: #4a4580;
     margin-left: auto;
   }}
 
@@ -452,15 +453,15 @@ def index():
     gap: 1rem;
   }}
   .card {{
-    background: #111827;
-    border: 1px solid #1e293b;
+    background: #1e1a4a;
+    border: 1px solid #2d2860;
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
     transition: all 0.2s ease;
     display: flex; flex-direction: column;
   }}
   .card:hover {{
-    border-color: #334155;
+    border-color: #3d3870;
     transform: translateY(-1px);
     box-shadow: 0 8px 25px -6px rgba(0,0,0,0.3);
   }}
@@ -470,7 +471,7 @@ def index():
     line-height: 1.4;
   }}
   .card-desc {{
-    font-size: 0.85rem; color: #64748b;
+    font-size: 0.85rem; color: #6b6390;
     line-height: 1.55;
     margin-bottom: 1rem;
     flex-grow: 1;
@@ -478,14 +479,14 @@ def index():
   .card-link {{
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #f59e0b; color: #0a0f1e;
+    background: #bf8d36; color: #17123b;
     border-radius: 8px;
     font-size: 0.8rem; font-weight: 600;
     text-decoration: none; transition: all 0.2s;
     align-self: flex-start;
   }}
   .card-link:hover {{
-    background: #fbbf24; transform: translateY(-1px);
+    background: #c99b44; transform: translateY(-1px);
   }}
   .card-link svg {{
     width: 14px; height: 14px; flex-shrink: 0;
@@ -494,14 +495,14 @@ def index():
   /* No results */
   .no-results {{
     text-align: center; padding: 3rem;
-    color: #475569; font-size: 0.95rem;
+    color: #4a4580; font-size: 0.95rem;
   }}
 
   /* Stats footer */
   .stats {{
     text-align: center; padding: 2rem 0;
-    font-size: 0.78rem; color: #334155;
-    border-top: 1px solid #1e293b;
+    font-size: 0.78rem; color: #3d3870;
+    border-top: 1px solid #2d2860;
     margin-top: 2rem;
   }}
 
@@ -518,8 +519,7 @@ def index():
 <div class="header">
   <div class="header-inner">
     <div class="logo">
-      <div class="logo-icon">◆</div>
-      Compass
+      <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img">
     </div>
     <div class="header-actions">
       <span class="user-email" id="userEmail">{user_json}</span>
@@ -530,7 +530,7 @@ def index():
 
 <div class="container">
   <div class="hero">
-    <h1>Company Bookmarks</h1>
+    <h1>Casago Bookmarks</h1>
     <p>Quick-access directory of tools, docs, and resources across every department.</p>
   </div>
 
@@ -552,9 +552,9 @@ const SECTION_COLORS = {{
   "Owner Success": "#06b6d4"
 }};
 
-const DEFAULT_COLOR = "#64748b";
+const DEFAULT_COLOR = "#6b6390";
 
-const SEARCH_HISTORY_KEY = 'compass_search';
+const SEARCH_HISTORY_KEY = 'casago_search';
 
 // Load bookmarks
 async function loadBookmarks() {{
@@ -667,7 +667,7 @@ LOGIN_PAGE = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compass · Sign In</title>
+<title>Casago · Bookmarks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -675,59 +675,55 @@ LOGIN_PAGE = """<!DOCTYPE html>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0a0f1e; color: #e2e8f0;
+    background: #17123b; color: #e2e8f0;
     display: flex; align-items: center; justify-content: center;
     min-height: 100vh; margin: 0; padding: 1rem;
   }
   .login-card {
-    text-align: center; max-width: 400px; width: 100%;
-    background: #111827; border: 1px solid #1e293b;
+    text-align: center; max-width: 420px; width: 100%;
+    background: #1e1a4a; border: 1px solid #2d2860;
     border-radius: 16px; padding: 3rem 2.5rem;
   }
-  .logo-icon {
-    width: 48px; height: 48px; margin: 0 auto 1.5rem;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem; font-weight: 800; color: #0a0f1e;
+  .login-logo {
+    max-width: 200px; margin: 0 auto 1.5rem;
   }
   h1 {
     font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    color: #e2e8f0; margin-bottom: 0.5rem;
   }
   p {
-    color: #64748b; margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.5;
+    color: #94a3b8; margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.5;
   }
   .btn-google {
     display: inline-flex; align-items: center; gap: 0.75rem;
-    padding: 0.85rem 2rem; background: #f59e0b; color: #0a0f1e;
+    padding: 0.85rem 2rem; background: #bf8d36; color: #17123b;
     border: 0; border-radius: 10px; font-weight: 600;
     font-size: 0.95rem; cursor: pointer; text-decoration: none;
     transition: all 0.2s;
   }
   .btn-google:hover {
-    background: #fbbf24; transform: translateY(-1px);
-    box-shadow: 0 8px 25px -6px rgba(245,158,11,0.3);
+    background: #c99b44; transform: translateY(-1px);
+    box-shadow: 0 8px 25px -6px rgba(191,141,54,0.3);
   }
   .btn-google svg { width: 20px; height: 20px; }
   .domain-hint {
-    margin-top: 1.25rem; font-size: 0.78rem; color: #475569;
+    margin-top: 1.25rem; font-size: 0.78rem; color: #6b6390;
   }
 </style>
 </head>
 <body>
 <div class="login-card">
-  <div class="logo-icon">◆</div>
-  <h1>Compass</h1>
-  <p>Company bookmarks &amp; internal resources.<br>Sign in with your work email to continue.</p>
+  <img src="data:image/png;base64,%s" alt="Casago" class="login-logo">
+  <h1>Casago Bookmarks</h1>
+  <p>Internal resources &amp; quick-access tools.<br>Sign in with your work email to continue.</p>
   <a href="/login" class="btn-google">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#0a0f1e" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#0a0f1e" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#0a0f1e" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#0a0f1e" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#17123b" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#17123b" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#17123b" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#17123b" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
     Sign in with Google
   </a>
   <div class="domain-hint">@roofstock.com email required</div>
 </div>
 </body>
-</html>"""
+</html>""" % LOGO_B64
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
