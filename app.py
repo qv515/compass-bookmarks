@@ -239,12 +239,12 @@ def callback():
             return "Email not provided", 400
         if not is_allowed(email, WHITELIST):
             encoded = urllib.parse.quote(email)
-            return f"""<html><body style="background:#070026;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem">
+            return f"""<html><body style="background:#0F172A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:1rem">
             <div style="text-align:center;max-width:420px;width:100%">
             <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" style="max-width:200px;margin-bottom:2rem">
-            <h1 style="font-size:1.1rem;font-weight:600;color:#e2e8f0;margin-bottom:0.5rem">{email} is not authorized</h1>
+            <h1 style="font-size:1.1rem;font-weight:600;color:#F1F5F9;margin-bottom:0.5rem">{email} is not authorized</h1>
             <p style="color:#94a3b8;margin-bottom:1.5rem;font-size:0.9rem">Request access and an admin will review your request.</p>
-            <button onclick="fetch('/request-access?email={encoded}',{{method:'POST'}}).then(r=>r.text()).then(t=>document.getElementById('msg').textContent=t)" style="padding:0.75rem 2.5rem;background:#e09d15;color:#070026;border:0;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer">Request Access</button>
+            <button onclick="fetch('/request-access?email={encoded}',{{method:'POST'}}).then(r=>r.text()).then(t=>document.getElementById('msg').textContent=t)" style="padding:0.75rem 2.5rem;background:#FFBB33;color:#0F172A;border:0;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer">Request Access</button>
             <p id="msg" style="color:#22c55e;margin-top:1rem;font-size:0.85rem"></p>
             <a href="/" style="display:inline-block;margin-top:1rem;color:#64748b;text-decoration:none;font-size:0.85rem">&larr; Back to sign in</a>
             </div></body></html>""", 403
@@ -342,17 +342,17 @@ def index():
   *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #070026;
-    color: #e2e8f0;
+    background: #0F172A;
+    color: #F1F5F9;
     min-height: 100vh;
   }}
-  ::selection {{ background: #e09d1544; color: #e09d15; }}
+  ::selection {{ background: #FFBB3344; color: #FFBB33; }}
 
   /* Scrollbar */
   ::-webkit-scrollbar {{ width: 6px; }}
-  ::-webkit-scrollbar-track {{ background: #070026; }}
-  ::-webkit-scrollbar-thumb {{ background: #1e1a4a; border-radius: 3px; }}
-  ::-webkit-scrollbar-thumb:hover {{ background: #2d2860; }}
+  ::-webkit-scrollbar-track {{ background: #0F172A; }}
+  ::-webkit-scrollbar-thumb {{ background: #334155; border-radius: 3px; }}
+  ::-webkit-scrollbar-thumb:hover {{ background: #4B5563; }}
 
   /* Header */
   .header {{
@@ -360,7 +360,7 @@ def index():
     background: rgba(12, 1, 56, 0.85);
     backdrop-filter: blur(16px) saturate(1.5);
     -webkit-backdrop-filter: blur(16px) saturate(1.5);
-    border-bottom: 1px solid #1e1a4a;
+    border-bottom: 1px solid #334155;
     padding: 0 2rem;
   }}
   .header-inner {{
@@ -376,18 +376,18 @@ def index():
     display: flex; align-items: center; gap: 1rem;
   }}
   .user-email {{
-    font-size: 0.8rem; color: #5a4e8c;
+    font-size: 0.8rem; color: #CBD5E1;
   }}
   .btn-logout {{
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
     background: transparent; color: #94a3b8;
-    border: 1px solid #1e1a4a; cursor: pointer;
+    border: 1px solid #334155; cursor: pointer;
     transition: all 0.2s;
     text-decoration: none;
   }}
   .btn-logout:hover {{
-    background: #1e1a4a; color: #e2e8f0;
+    background: #334155; color: #F1F5F9;
   }}
 
   /* Main content */
@@ -399,11 +399,11 @@ def index():
   }}
   .hero h1 {{
     font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em;
-    color: #e09d15;
+    color: #FFBB33;
     margin-bottom: 0.5rem;
   }}
   .hero p {{
-    font-size: 1.05rem; color: #5a4e8c; max-width: 600px;
+    font-size: 1.05rem; color: #CBD5E1; max-width: 600px;
     line-height: 1.6;
   }}
 
@@ -413,15 +413,15 @@ def index():
   }}
   .search-input {{
     width: 100%; padding: 0.85rem 1.25rem;
-    background: #150847; border: 1px solid #1e1a4a;
-    border-radius: 10px; color: #e2e8f0;
+    background: #1F2937; border: 1px solid #334155;
+    border-radius: 10px; color: #F1F5F9;
     font-size: 0.95rem; font-family: 'Inter', sans-serif;
     outline: none; transition: all 0.2s;
   }}
   .search-input:focus {{
-    border-color: #e09d15; box-shadow: 0 0 0 3px #e09d1522;
+    border-color: #FFBB33; box-shadow: 0 0 0 3px #FFBB3322;
   }}
-  .search-input::placeholder {{ color: #3d3570; }}
+  .search-input::placeholder {{ color: #94A3B8; }}
 
   /* Section */
   .section {{
@@ -431,18 +431,18 @@ def index():
     display: flex; align-items: center; gap: 0.75rem;
     margin-bottom: 1.25rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid #1e1a4a;
+    border-bottom: 1px solid #334155;
   }}
   .section-dot {{
     width: 10px; height: 10px; border-radius: 50%;
     flex-shrink: 0;
   }}
   .section-title {{
-    font-size: 1.15rem; font-weight: 600; color: #5a4e8c;
+    font-size: 1.15rem; font-weight: 600; color: #CBD5E1;
     text-transform: uppercase; letter-spacing: 0.06em;
   }}
   .section-count {{
-    font-size: 0.8rem; color: #3d3570;
+    font-size: 0.8rem; color: #94A3B8;
     margin-left: auto;
   }}
 
@@ -451,15 +451,15 @@ def index():
     display: flex; flex-direction: column; gap: 0.75rem;
   }}
   .card {{
-    background: #150847;
-    border: 1px solid #1e1a4a;
+    background: #1F2937;
+    border: 1px solid #334155;
     border-radius: 12px;
     padding: 1rem 1.5rem;
     transition: all 0.2s ease;
     display: flex; align-items: center; gap: 1.5rem;
   }}
   .card:hover {{
-    border-color: #2d2860;
+    border-color: #4B5563;
     transform: translateY(-1px);
     box-shadow: 0 8px 25px -6px rgba(0,0,0,0.3);
   }}
@@ -472,20 +472,20 @@ def index():
     line-height: 1.4;
   }}
   .card-desc {{
-    font-size: 0.85rem; color: #5a4e8c;
+    font-size: 0.85rem; color: #CBD5E1;
     line-height: 1.5;
   }}
   .card-link {{
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: #e09d15; color: #070026;
+    background: #FFBB33; color: #0F172A;
     border-radius: 8px;
     font-size: 0.8rem; font-weight: 600;
     text-decoration: none; transition: all 0.2s;
     flex-shrink: 0;
   }}
   .card-link:hover {{
-    background: #e9ac2e; transform: translateY(-1px);
+    background: #FFC44D; transform: translateY(-1px);
   }}
   .card-link svg {{
     width: 14px; height: 14px; flex-shrink: 0;
@@ -494,14 +494,14 @@ def index():
   /* No results */
   .no-results {{
     text-align: center; padding: 3rem;
-    color: #3d3570; font-size: 0.95rem;
+    color: #94A3B8; font-size: 0.95rem;
   }}
 
   /* Stats footer */
   .stats {{
     text-align: center; padding: 2rem 0;
-    font-size: 0.78rem; color: #2d2860;
-    border-top: 1px solid #1e1a4a;
+    font-size: 0.78rem; color: #4B5563;
+    border-top: 1px solid #334155;
     margin-top: 2rem;
   }}
 
@@ -552,7 +552,7 @@ const SECTION_COLORS = {{
   "Owner Success": "#06b6d4"
 }};
 
-const DEFAULT_COLOR = "#5a4e8c";
+const DEFAULT_COLOR = "#CBD5E1";
 
 const SEARCH_HISTORY_KEY = 'str_bookmarks_search';
 
@@ -677,13 +677,13 @@ LOGIN_PAGE = """<!DOCTYPE html>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #070026; color: #e2e8f0;
+    background: #0F172A; color: #F1F5F9;
     display: flex; align-items: center; justify-content: center;
     min-height: 100vh; margin: 0; padding: 1rem;
   }
   .login-card {
     text-align: center; max-width: 420px; width: 100%;
-    background: #150847; border: 1px solid #1e1a4a;
+    background: #1F2937; border: 1px solid #334155;
     border-radius: 16px; padding: 3rem 2.5rem;
   }
   .login-logo {
@@ -691,25 +691,25 @@ LOGIN_PAGE = """<!DOCTYPE html>
   }
   h1 {
     font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;
-    color: #e2e8f0; margin-bottom: 0.5rem;
+    color: #F1F5F9; margin-bottom: 0.5rem;
   }
   p {
-    color: #5a4e8c; margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.5;
+    color: #CBD5E1; margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.5;
   }
   .btn-google {
     display: inline-flex; align-items: center; gap: 0.75rem;
-    padding: 0.85rem 2rem; background: #e09d15; color: #070026;
+    padding: 0.85rem 2rem; background: #FFBB33; color: #0F172A;
     border: 0; border-radius: 10px; font-weight: 600;
     font-size: 0.95rem; cursor: pointer; text-decoration: none;
     transition: all 0.2s;
   }
   .btn-google:hover {
-    background: #e9ac2e; transform: translateY(-1px);
-    box-shadow: 0 8px 25px -6px rgba(224,157,21,0.3);
+    background: #FFC44D; transform: translateY(-1px);
+    box-shadow: 0 8px 25px -6px rgba(255,187,51,0.3);
   }
   .btn-google svg { width: 20px; height: 20px; }
   .domain-hint {
-    margin-top: 1.25rem; font-size: 0.78rem; color: #5a4e8c;
+    margin-top: 1.25rem; font-size: 0.78rem; color: #CBD5E1;
   }
 </style>
 </head>
@@ -719,7 +719,7 @@ LOGIN_PAGE = """<!DOCTYPE html>
   <h1>STR Bookmarks</h1>
   <p>Internal resources &amp; quick-access tools.<br>Sign in with your work email to continue.</p>
   <a href="/login" class="btn-google">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#070026" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#070026" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#070026" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#070026" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#0F172A" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#0F172A" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#0F172A" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#0F172A" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
     Sign in with Google
   </a>
   <div class="domain-hint">@roofstock.com email required</div>
