@@ -113,7 +113,7 @@ def fetch_bookmarks():
     """Read the bookmarks sheet and return approved items grouped by section."""
     result = _sheets_api_read(SHEET_ID, "Sheet1!A1:F200")
     if not result:
-        return []
+        return {}
     rows = result.get("values", [])
     if not rows:
         return []
@@ -713,7 +713,7 @@ LOGIN_PAGE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="login-card">
-  <img src="data:image/png;base64,%s" alt="Casago" class="login-logo">
+  <img src="data:image/png;base64,_LOGO_PLACEHOLDER_" alt="Casago" class="login-logo">
   <h1>Casago Bookmarks</h1>
   <p>Internal resources &amp; quick-access tools.<br>Sign in with your work email to continue.</p>
   <a href="/login" class="btn-google">
@@ -723,7 +723,7 @@ LOGIN_PAGE = """<!DOCTYPE html>
   <div class="domain-hint">@roofstock.com email required</div>
 </div>
 </body>
-</html>""" % LOGO_B64
+</html>""".replace("_LOGO_PLACEHOLDER_", LOGO_B64)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
