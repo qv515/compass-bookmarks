@@ -358,10 +358,10 @@ def dashboard():
   .header-inner {{
     max-width: 1100px; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
+    height: 56px;
   }}
   .logo {{ display: flex; align-items: center; }}
-  .logo-img {{ max-height: 28px; width: auto; }}
+  .logo-img {{ max-height: 24px; width: auto; }}
   .header-nav {{ display: flex; align-items: center; gap: 0.25rem; }}
   .nav-btn {{
     display: inline-flex; align-items: center; gap: 0.4rem;
@@ -371,7 +371,7 @@ def dashboard():
   }}
   .nav-btn:hover {{ background: #1F2937; color: #CBD5E1; }}
   .nav-btn.active {{ background: #1F2937; color: #438ECA; }}
-  .nav-btn svg {{ width: 16px; height: 16px; flex-shrink: 0; }}
+  .nav-btn svg {{ width: 14px; height: 14px; flex-shrink: 0; }}
   .header-actions {{ display: flex; align-items: center; gap: 1rem; }}
   .user-email {{ font-size: 0.8rem; color: #94A3B8; }}
   .btn-logout {{
@@ -382,7 +382,7 @@ def dashboard():
     transition: all 0.2s; text-decoration: none;
   }}
   .btn-logout:hover {{ background: #334155; color: #F1F5F9; }}
-  .container {{ max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }}
+  .container {{ max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 3rem; }}
   .wip {{
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 4rem 2rem; text-align: center;
@@ -465,12 +465,12 @@ def index():
   .header-inner {{
     max-width: 1100px; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
+    height: 56px;
   }}
   .logo {{
     display: flex; align-items: center;
   }}
-  .logo-img {{ max-height: 28px; width: auto; }}
+  .logo-img {{ max-height: 24px; width: auto; }}
   .header-actions {{
     display: flex; align-items: center; gap: 1rem;
   }}
@@ -495,9 +495,9 @@ def index():
     }}
     .nav-btn {{
       display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.4rem 0.85rem;
-      border-radius: 8px;
-      font-size: 0.8rem; font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.75rem; font-weight: 500;
       color: #94A3B8;
       text-decoration: none;
       transition: all 0.15s;
@@ -509,33 +509,33 @@ def index():
       background: #1F2937; color: #438ECA;
     }}
     .nav-btn svg {{
-      width: 16px; height: 16px;
+      width: 14px; height: 14px;
       flex-shrink: 0;
     }}
 
     /* Main content */
   .container {{
-    max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem 4rem;
+    max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 3rem;
   }}
   .hero {{
     margin-bottom: 3rem;
   }}
   .hero h1 {{
-    font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em;
+    font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
     color: #438ECA;
     margin-bottom: 0.5rem;
   }}
   .hero p {{
-    font-size: 1.05rem; color: #CBD5E1; max-width: 800px;
+    font-size: 0.7rem; color: #CBD5E1; max-width: 800px;
     line-height: 1.6;
   }}
 
   /* Search */
   .search-wrap {{
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }}
   .search-input {{
-    width: 100%; padding: 0.85rem 1.25rem;
+    width: 100%; padding: 0.65rem 1rem;
     background: #1F2937; border: 1px solid #334155;
     border-radius: 10px; color: #F1F5F9;
     font-size: 0.95rem; font-family: 'Inter', sans-serif;
@@ -553,10 +553,10 @@ def index():
   }}
   .filter-chip {{
     display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.35rem 0.9rem;
+    padding: 0.25rem 0.7rem;
     background: #1F2937; border: 1px solid #334155;
     border-radius: 20px;
-    font-size: 0.8rem; font-weight: 500; color: #CBD5E1;
+    font-size: 0.7rem; font-weight: 500; color: #CBD5E1;
     cursor: pointer; transition: all 0.15s;
     user-select: none;
   }}
@@ -572,10 +572,10 @@ def index():
 
   /* Section */
     .section {{
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
     }}
     .section-header {{
-      display: flex; align-items: center; gap: 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
       margin-bottom: 1.25rem;
       padding-bottom: 0.75rem;
       border-bottom: 1px solid #334155;
@@ -590,17 +590,17 @@ def index():
       flex-shrink: 0;
     }}
     .section-title {{
-      font-size: 1.15rem; font-weight: 600; color: #CBD5E1;
+      font-size: 0.9rem; font-weight: 600; color: #CBD5E1;
       text-transform: uppercase; letter-spacing: 0.06em;
       transition: color 0.15s;
     }}
     .section-count {{
-      font-size: 0.8rem; color: #94A3B8;
+      font-size: 0.65rem; color: #94A3B8;
       margin-left: auto;
       margin-right: 0.5rem;
     }}
     .section-indicator {{
-        font-size: 0.65rem; color: #4B5563;
+        font-size: 0.55rem; color: #4B5563;
         flex-shrink: 0;
         line-height: 1;
         transition: color 0.15s;
@@ -608,7 +608,7 @@ def index():
 
     /* Collapsible card list */
     .card-list {{
-      display: flex; flex-direction: column; gap: 0.75rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
       overflow: hidden;
       transition: max-height 0.3s ease, opacity 0.2s ease;
       max-height: 2000px;
@@ -624,7 +624,7 @@ def index():
     background: #1F2937;
     border: 1px solid #334155;
     border-radius: 12px;
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     transition: all 0.2s ease;
     display: flex; align-items: center; gap: 1.5rem;
   }}
@@ -637,20 +637,20 @@ def index():
     flex: 1; min-width: 0;
   }}
   .card-title {{
-    font-size: 1rem; font-weight: 600; color: #f1f5f9;
+    font-size: 0.82rem; font-weight: 600; color: #f1f5f9;
     margin-bottom: 0.25rem;
     line-height: 1.4;
   }}
   .card-desc {{
-    font-size: 0.85rem; color: #CBD5E1;
+    font-size: 0.7rem; color: #CBD5E1;
     line-height: 1.5;
   }}
   .card-link {{
     display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.35rem 0.8rem;
     background: #438ECA; color: #0F172A;
-    border-radius: 8px;
-    font-size: 0.8rem; font-weight: 600;
+    border-radius: 6px;
+    font-size: 0.65rem; font-weight: 600;
     text-decoration: none; transition: all 0.2s;
     flex-shrink: 0;
   }}
@@ -956,10 +956,10 @@ LOGIN_PAGE = """<!DOCTYPE html>
     color: #F1F5F9; margin-bottom: 0.5rem;
   }
   p {
-    color: #CBD5E1; margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.5;
+    color: #CBD5E1; margin-bottom: 1.25rem; font-size: 0.9rem; line-height: 1.5;
   }
   .btn-google {
-    display: inline-flex; align-items: center; gap: 0.75rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.85rem 2rem; background: #438ECA; color: #0F172A;
     border: 0; border-radius: 10px; font-weight: 600;
     font-size: 0.95rem; cursor: pointer; text-decoration: none;
