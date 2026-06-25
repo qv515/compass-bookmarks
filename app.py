@@ -382,7 +382,7 @@ def dashboard():
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
         --header-bg: #F1F4F8;
-        --card-bg: #F8FAFC;
+        --card-bg: #F1F5F9;
     --input-bg: #F1F4F8;
     --shadow: rgba(0,0,0,0.08);
     --hero-title: #1F2937;
@@ -542,7 +542,7 @@ def index():
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
         --header-bg: #F1F4F8;
-        --card-bg: #F8FAFC;
+        --card-bg: #F1F5F9;
     --input-bg: #F1F4F8;
     --shadow: rgba(0,0,0,0.08);
     --hero-title: #1F2937;
@@ -702,8 +702,8 @@ def index():
       user-select: none;
     }}
     .section-header:hover .section-title {{
-      color: #F1F5F9;
-    }}
+          color: var(--accent);
+        }}
     .section-dot {{
       width: 10px; height: 10px; border-radius: 50%;
       flex-shrink: 0;
