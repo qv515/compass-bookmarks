@@ -415,8 +415,8 @@ def dashboard():
     .logo-black {{ display: none; }}
     body.light-mode .logo-white {{ display: none; }}
     body.light-mode .logo-black {{ display: inline; }}
-    .header-nav
-  .nav-btn {{
+        .header-nav {{
+      .nav-btn {{
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.4rem 0.85rem; border-radius: 8px;
     font-size: 0.8rem; font-weight: 500;
@@ -586,12 +586,12 @@ def index():
     .logo-black {{ display: none; }}
     body.light-mode .logo-white {{ display: none; }}
     body.light-mode .logo-black {{ display: inline; }}
-    .header-nav
-    display: flex; align-items: center; gap: 1rem;
-  }}
-  .user-email {{
-    font-size: 0.8rem; color: #CBD5E1;
-  }}
+        .header-nav {{
+        display: flex; align-items: center; gap: 1rem;
+      }}
+      .user-email {{
+        font-size: 0.8rem; color: var(--text-header);
+      }}
   .btn-logout {{
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
@@ -609,9 +609,9 @@ def index():
       .logo-black {{ display: none; }}
       body.light-mode .logo-white {{ display: none; }}
       body.light-mode .logo-black {{ display: inline; }}
-      .header-nav
-      display: flex; align-items: center; gap: 0.25rem;
-    }}
+            .header-nav {{
+            display: flex; align-items: center; gap: 0.25rem;
+          }}
     .nav-btn {{
       display: inline-flex; align-items: center; gap: 0.4rem;
       padding: 0.3rem 0.7rem;
