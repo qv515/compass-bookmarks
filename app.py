@@ -412,19 +412,21 @@ def dashboard():
   .logo {{ display: flex; align-items: center; }}
   .logo-img {{ max-height: 24px; width: auto; }}
     .logo-white {{ display: inline; }}
-    .logo-black {{ display: none; }}
-    body.light-mode .logo-white {{ display: none; }}
-    body.light-mode .logo-black {{ display: inline; }}
-        .header-nav {{
+        .logo-black {{ display: none; }}
+        body.light-mode .logo-white {{ display: none; }}
+        body.light-mode .logo-black {{ display: inline; }}
+      .header-nav {{
+        display: flex; align-items: center; gap: 0.25rem;
+      }}
       .nav-btn {{
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.4rem 0.85rem; border-radius: 8px;
-    font-size: 0.8rem; font-weight: 500;
-    color: var(--text-header); text-decoration: none; transition: all 0.15s;
-  }}
-  .nav-btn:hover {{ background: var(--surface); color: var(--text-secondary); }}
-  .nav-btn.active {{ background: var(--surface); color: var(--accent); }}
-  .nav-btn svg {{ width: 14px; height: 14px; flex-shrink: 0; }}
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        padding: 0.4rem 0.85rem; border-radius: 8px;
+        font-size: 0.8rem; font-weight: 500;
+        color: var(--text-header); text-decoration: none; transition: all 0.15s;
+      }}
+      .nav-btn:hover {{ background: var(--surface); color: var(--text-secondary); }}
+      .nav-btn.active {{ background: var(--surface); color: var(--accent); }}
+      .nav-btn svg {{ width: 14px; height: 14px; flex-shrink: 0; }}
   .header-actions {{ display: flex; align-items: center; gap: 1rem; }}
   .user-email {{ font-size: 0.8rem; color: var(--text-header); }}
   .btn-logout {{
