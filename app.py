@@ -348,6 +348,7 @@ def dashboard():
     --text-primary: #F1F5F9;
     --text-secondary: #CBD5E1;
     --text-muted: #94A3B8;
+    --text-header: #94A3B8;
     --border: #334155;
     --accent: #438ECA;
     --accent-hover: #5A9ED4;
@@ -360,21 +361,22 @@ def dashboard():
     --selection: #438ECA44;
   }}
   body.light-mode {{
-    --bg: #FFFFFF;
-    --surface: #F1F5F9;
-    --surface-hover: #E2E8F0;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #94A3B8;
-    --border: #CBD5E1;
+    --bg: #FAFBFC;
+    --surface: #F1F4F8;
+    --surface-hover: #E5E9F0;
+    --text-primary: #1F2937;
+    --text-secondary: #64748B;
+    --text-muted: #64748B;
+    --text-header: #0F172A;
+    --border: #E5E9F0;
         --accent: #438ECA;
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
-        --header-bg: #CBD5E1;
-        --card-bg: #F1F5F9;
-    --input-bg: #F1F5F9;
+        --header-bg: #F1F4F8;
+        --card-bg: #FFFFFF;
+    --input-bg: #F1F4F8;
     --shadow: rgba(0,0,0,0.08);
-    --hero-title: #0F172A;
+    --hero-title: #1F2937;
     --selection: #438ECA22;
   }}
   body {{
@@ -405,13 +407,13 @@ def dashboard():
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.4rem 0.85rem; border-radius: 8px;
     font-size: 0.8rem; font-weight: 500;
-    color: #94A3B8; text-decoration: none; transition: all 0.15s;
+    color: var(--text-header); text-decoration: none; transition: all 0.15s;
   }}
   .nav-btn:hover {{ background: var(--surface); color: var(--text-secondary); }}
   .nav-btn.active {{ background: var(--surface); color: var(--accent); }}
   .nav-btn svg {{ width: 14px; height: 14px; flex-shrink: 0; }}
   .header-actions {{ display: flex; align-items: center; gap: 1rem; }}
-  .user-email {{ font-size: 0.8rem; color: var(--text-muted); }}
+  .user-email {{ font-size: 0.8rem; color: var(--text-header); }}
   .btn-logout {{
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
@@ -501,6 +503,7 @@ def index():
     --text-primary: #F1F5F9;
     --text-secondary: #CBD5E1;
     --text-muted: #94A3B8;
+    --text-header: #94A3B8;
     --border: #334155;
     --accent: #438ECA;
     --accent-hover: #5A9ED4;
@@ -513,21 +516,22 @@ def index():
     --selection: #438ECA44;
   }}
   body.light-mode {{
-    --bg: #FFFFFF;
-    --surface: #F1F5F9;
-    --surface-hover: #E2E8F0;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-muted: #94A3B8;
-    --border: #CBD5E1;
+    --bg: #FAFBFC;
+    --surface: #F1F4F8;
+    --surface-hover: #E5E9F0;
+    --text-primary: #1F2937;
+    --text-secondary: #64748B;
+    --text-muted: #64748B;
+    --text-header: #0F172A;
+    --border: #E5E9F0;
         --accent: #438ECA;
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
-        --header-bg: #CBD5E1;
-        --card-bg: #F1F5F9;
-    --input-bg: #F1F5F9;
+        --header-bg: #F1F4F8;
+        --card-bg: #FFFFFF;
+    --input-bg: #F1F4F8;
     --shadow: rgba(0,0,0,0.08);
-    --hero-title: #0F172A;
+    --hero-title: #1F2937;
     --selection: #438ECA22;
   }}
   body {{
