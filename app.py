@@ -665,15 +665,15 @@ def index():
       width: 10px; height: 10px; border-radius: 50%;
       flex-shrink: 0;
     }}
-    .section-title {{
-      font-size: 0.9rem; font-weight: 600; color: #CBD5E1;
-      text-transform: uppercase; letter-spacing: 0.06em;
-      transition: color 0.15s;
-    }}
+.section-title {{
+    font-size: 0.9rem; font-weight: 600; color: var(--hero-title);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    transition: color 0.15s;
+  }}
     .section-count {{
-      font-size: 0.65rem; color: #94A3B8;
-      margin-left: auto;
-      margin-right: 0.5rem;
+      font-size: 0.65rem; color: var(--text-muted);
+            margin-left: auto;
+            margin-right: 0.5rem;
     }}
     .section-indicator {{
         font-size: 0.55rem; color: var(--text-muted);
@@ -697,9 +697,9 @@ def index():
       gap: 0;
     }}
   .card {{
-    background: #1F2937;
-    border: 1px solid #334155;
-    border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
     padding: 0.75rem 1.25rem;
     transition: all 0.2s ease;
     display: flex; align-items: center; gap: 1.5rem;
