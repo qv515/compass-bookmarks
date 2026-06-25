@@ -377,12 +377,12 @@ def dashboard():
     --text-secondary: #64748B;
     --text-muted: #64748B;
     --text-header: #0F172A;
-    --border: #E5E9F0;
+    --border: #D1D5DB;
         --accent: #438ECA;
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
         --header-bg: #F1F4F8;
-        --card-bg: #FFFFFF;
+        --card-bg: #F8FAFC;
     --input-bg: #F1F4F8;
     --shadow: rgba(0,0,0,0.08);
     --hero-title: #1F2937;
@@ -430,7 +430,7 @@ def dashboard():
   .btn-logout {{
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
-    background: transparent; color: #94A3B8;
+    background: transparent; color: var(--text-header);
     border: 1px solid var(--border); cursor: pointer;
     transition: all 0.2s; text-decoration: none;
   }}
@@ -464,7 +464,7 @@ def dashboard():
     </div>
     <div class="header-actions">
           <span class="user-email">{user_email}</span>
-          <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:0.25rem 0.4rem;cursor:pointer;font-size:0.8rem;line-height:1;color:var(--text-muted)">&#9790;</button>
+          <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:0.25rem 0.4rem;cursor:pointer;font-size:0.8rem;line-height:1;color:var(--text-header)">&#9790;</button>
           <a href="/logout" class="btn-logout">Sign out</a>
         </div>
   </div>
@@ -537,12 +537,12 @@ def index():
     --text-secondary: #64748B;
     --text-muted: #64748B;
     --text-header: #0F172A;
-    --border: #E5E9F0;
+    --border: #D1D5DB;
         --accent: #438ECA;
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
         --header-bg: #F1F4F8;
-        --card-bg: #FFFFFF;
+        --card-bg: #F8FAFC;
     --input-bg: #F1F4F8;
     --shadow: rgba(0,0,0,0.08);
     --hero-title: #1F2937;
@@ -823,7 +823,7 @@ def index():
     </div>
     <div class="header-actions">
       <span class="user-email" id="userEmail">{user_email}</span>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:0.25rem 0.4rem;cursor:pointer;font-size:0.8rem;line-height:1;color:var(--text-muted)">&#9790;</button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:0.25rem 0.4rem;cursor:pointer;font-size:0.8rem;line-height:1;color:var(--text-header)">&#9790;</button>
       <a href="/logout" class="btn-logout">Sign out</a>
     </div>
   </div>
