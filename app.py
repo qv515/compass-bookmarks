@@ -41,9 +41,18 @@ logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo_b64.t
 if os.path.exists(logo_path):
     with open(logo_path) as f:
         LOGO_B64 = f.read().strip()
-        print(f"Logo loaded: {len(LOGO_B64)} chars", flush=True)
+        print(f"Logo (white) loaded: {len(LOGO_B64)} chars", flush=True)
 else:
-    print("Logo file not found", flush=True)
+    print("Logo (white) file not found", flush=True)
+
+LOGO_BLACK_B64 = ""
+logo_black_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logo_black_b64.txt")
+if os.path.exists(logo_black_path):
+    with open(logo_black_path) as f:
+        LOGO_BLACK_B64 = f.read().strip()
+        print(f"Logo (black) loaded: {len(LOGO_BLACK_B64)} chars", flush=True)
+else:
+    print("Logo (black) file not found", flush=True)
 
 # --- Flask ---
 app = Flask(__name__)
@@ -402,7 +411,11 @@ def dashboard():
   }}
   .logo {{ display: flex; align-items: center; }}
   .logo-img {{ max-height: 24px; width: auto; }}
-  .header-nav {{ display: flex; align-items: center; gap: 0.25rem; }}
+    .logo-white {{ display: inline; }}
+    .logo-black {{ display: none; }}
+    body.light-mode .logo-white {{ display: none; }}
+    body.light-mode .logo-black {{ display: inline; }}
+    .header-nav
   .nav-btn {{
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.4rem 0.85rem; border-radius: 8px;
@@ -436,7 +449,8 @@ def dashboard():
 <div class="header">
   <div class="header-inner">
     <div class="logo">
-      <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img">
+      <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img logo-white">
+      <img src="data:image/png;base64,{LOGO_BLACK_B64}" alt="Casago" class="logo-img logo-black">
     </div>
     <div class="header-nav">
       <a href="/" class="nav-btn">
@@ -568,7 +582,11 @@ def index():
     display: flex; align-items: center;
   }}
   .logo-img {{ max-height: 24px; width: auto; }}
-  .header-actions {{
+    .logo-white {{ display: inline; }}
+    .logo-black {{ display: none; }}
+    body.light-mode .logo-white {{ display: none; }}
+    body.light-mode .logo-black {{ display: inline; }}
+    .header-nav
     display: flex; align-items: center; gap: 1rem;
   }}
   .user-email {{
@@ -586,8 +604,12 @@ def index():
       background: var(--surface-hover); color: var(--text-primary);
     }}
 
-    /* Nav */
-    .header-nav {{
+    .logo-img {{ max-height: 24px; width: auto; }}
+      .logo-white {{ display: inline; }}
+      .logo-black {{ display: none; }}
+      body.light-mode .logo-white {{ display: none; }}
+      body.light-mode .logo-black {{ display: inline; }}
+      .header-nav
       display: flex; align-items: center; gap: 0.25rem;
     }}
     .nav-btn {{
@@ -786,7 +808,8 @@ def index():
 <div class="header">
   <div class="header-inner">
     <div class="logo">
-      <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img">
+      <img src="data:image/png;base64,{LOGO_B64}" alt="Casago" class="logo-img logo-white">
+      <img src="data:image/png;base64,{LOGO_BLACK_B64}" alt="Casago" class="logo-img logo-black">
     </div>
     <div class="header-nav">
       <a href="/" class="nav-btn active">
