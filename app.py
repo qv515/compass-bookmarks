@@ -370,7 +370,7 @@ def dashboard():
         --accent: #438ECA;
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
-        --header-bg: rgba(241, 245, 249, 0.95);
+        --header-bg: #CBD5E1;
         --card-bg: #F1F5F9;
     --input-bg: #F1F5F9;
     --shadow: rgba(0,0,0,0.08);
@@ -523,7 +523,7 @@ def index():
         --accent: #438ECA;
         --accent-hover: #5A9ED4;
         --accent-bg: rgba(67,142,202,0.1);
-        --header-bg: rgba(241, 245, 249, 0.95);
+        --header-bg: #CBD5E1;
         --card-bg: #F1F5F9;
     --input-bg: #F1F5F9;
     --shadow: rgba(0,0,0,0.08);
@@ -548,9 +548,9 @@ def index():
 
   /* Header */
   .header {{
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(12, 1, 56, 0.85);
-    backdrop-filter: blur(16px) saturate(1.5);
+      position: sticky; top: 0; z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(16px) saturate(1.5);
     -webkit-backdrop-filter: blur(16px) saturate(1.5);
     border-bottom: 1px solid var(--border);
     padding: 0 2rem;
