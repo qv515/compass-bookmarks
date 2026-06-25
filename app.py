@@ -447,9 +447,10 @@ def dashboard():
       </a>
     </div>
     <div class="header-actions">
-      <span class="user-email">{user_email}</span>
-      <a href="/logout" class="btn-logout">Sign out</a>
-    </div>
+          <span class="user-email">{user_email}</span>
+          <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:0.25rem 0.4rem;cursor:pointer;font-size:0.8rem;line-height:1;color:var(--text-muted)">&#9790;</button>
+          <a href="/logout" class="btn-logout">Sign out</a>
+        </div>
   </div>
 </div>
 <div class="container">
@@ -459,6 +460,22 @@ def dashboard():
     <p>This dashboard is coming soon.</p>
   </div>
 </div>
+<script>
+const THEME_KEY = 'str_theme';
+function initTheme() {{
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light') document.body.classList.add('light-mode');
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.innerHTML = document.body.classList.contains('light-mode') ? '&#9728;' : '&#9790;';
+}}
+function toggleTheme() {{
+  document.body.classList.toggle('light-mode');
+  localStorage.setItem(THEME_KEY, document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.innerHTML = document.body.classList.contains('light-mode') ? '&#9728;' : '&#9790;';
+}}
+initTheme();
+</script>
 </body>
 </html>"""
 
