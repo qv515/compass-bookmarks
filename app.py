@@ -642,10 +642,11 @@ def index():
     margin-bottom: 3rem;
   }}
   .hero h1 {{
-    font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
-    color: var(--hero-title);
-    margin-bottom: 0.5rem;
-  }}
+      font-size: 2rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--hero-title);
+      margin-bottom: 0.5rem;
+    }}
   .hero p {{
     font-size: 0.7rem; color: var(--text-secondary); max-width: 800px;
     line-height: 1.6;
