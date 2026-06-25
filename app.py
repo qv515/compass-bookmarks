@@ -341,18 +341,56 @@ def dashboard():
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  :root {{
+    --bg: #0F172A;
+    --surface: #1F2937;
+    --surface-hover: #334155;
+    --text-primary: #F1F5F9;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border: #334155;
+    --accent: #438ECA;
+    --accent-hover: #5A9ED4;
+    --accent-bg: rgba(67,142,202,0.15);
+    --header-bg: rgba(15, 23, 42, 0.85);
+    --card-bg: #1F2937;
+    --input-bg: #1F2937;
+    --shadow: rgba(0,0,0,0.3);
+    --hero-title: #438ECA;
+    --selection: #438ECA44;
+  }}
+  body.light-mode {{
+    --bg: #FFFFFF;
+    --surface: #F1F5F9;
+    --surface-hover: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --border: #E2E8F0;
+    --accent: #438ECA;
+    --accent-hover: #5A9ED4;
+    --accent-bg: rgba(67,142,202,0.1);
+    --header-bg: rgba(30, 41, 59, 0.95);
+    --card-bg: #F8FAFC;
+    --input-bg: #F1F5F9;
+    --shadow: rgba(0,0,0,0.08);
+    --hero-title: #0F172A;
+    --selection: #438ECA22;
+  }}
   body {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0F172A;
-    color: #F1F5F9;
+    background: var(--bg);
+    color: var(--text-primary);
     min-height: 100vh;
+    transition: background 0.2s, color 0.2s;
   }}
+  ::selection {{ background: var(--selection); color: var(--accent); }}
   .header {{
     position: sticky; top: 0; z-index: 100;
-    background: rgba(15, 23, 42, 0.85);
+    background: var(--header-bg);
     backdrop-filter: blur(16px) saturate(1.5);
     -webkit-backdrop-filter: blur(16px) saturate(1.5);
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid var(--border);
     padding: 0 2rem;
   }}
   .header-inner {{
@@ -369,19 +407,19 @@ def dashboard():
     font-size: 0.8rem; font-weight: 500;
     color: #94A3B8; text-decoration: none; transition: all 0.15s;
   }}
-  .nav-btn:hover {{ background: #1F2937; color: #CBD5E1; }}
-  .nav-btn.active {{ background: #1F2937; color: #438ECA; }}
+  .nav-btn:hover {{ background: var(--surface); color: var(--text-secondary); }}
+  .nav-btn.active {{ background: var(--surface); color: var(--accent); }}
   .nav-btn svg {{ width: 14px; height: 14px; flex-shrink: 0; }}
   .header-actions {{ display: flex; align-items: center; gap: 1rem; }}
-  .user-email {{ font-size: 0.8rem; color: #94A3B8; }}
+  .user-email {{ font-size: 0.8rem; color: var(--text-muted); }}
   .btn-logout {{
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
     background: transparent; color: #94A3B8;
-    border: 1px solid #334155; cursor: pointer;
+    border: 1px solid var(--border); cursor: pointer;
     transition: all 0.2s; text-decoration: none;
   }}
-  .btn-logout:hover {{ background: #334155; color: #F1F5F9; }}
+  .btn-logout:hover {{ background: var(--surface-hover); color: var(--text-primary); }}
   .container {{ max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 3rem; }}
   .wip {{
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -439,18 +477,56 @@ def index():
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  :root {{
+    --bg: #0F172A;
+    --surface: #1F2937;
+    --surface-hover: #334155;
+    --text-primary: #F1F5F9;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border: #334155;
+    --accent: #438ECA;
+    --accent-hover: #5A9ED4;
+    --accent-bg: rgba(67,142,202,0.15);
+    --header-bg: rgba(15, 23, 42, 0.85);
+    --card-bg: #1F2937;
+    --input-bg: #1F2937;
+    --shadow: rgba(0,0,0,0.3);
+    --hero-title: #438ECA;
+    --selection: #438ECA44;
+  }}
+  body.light-mode {{
+    --bg: #FFFFFF;
+    --surface: #F1F5F9;
+    --surface-hover: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --border: #E2E8F0;
+    --accent: #438ECA;
+    --accent-hover: #5A9ED4;
+    --accent-bg: rgba(67,142,202,0.1);
+    --header-bg: rgba(30, 41, 59, 0.95);
+    --card-bg: #F8FAFC;
+    --input-bg: #F1F5F9;
+    --shadow: rgba(0,0,0,0.08);
+    --hero-title: #0F172A;
+    --selection: #438ECA22;
+  }}
   body {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0F172A;
-    color: #F1F5F9;
+    background: var(--bg);
+    color: var(--text-primary);
     min-height: 100vh;
+    transition: background 0.2s, color 0.2s;
   }}
+  ::selection {{ background: var(--selection); color: var(--accent); }}
   ::selection {{ background: #438ECA44; color: #438ECA; }}
 
   /* Scrollbar */
   ::-webkit-scrollbar {{ width: 6px; }}
-  ::-webkit-scrollbar-track {{ background: #0F172A; }}
-  ::-webkit-scrollbar-thumb {{ background: #334155; border-radius: 3px; }}
+  ::-webkit-scrollbar-track {{ background: var(--bg); }}
+  ::-webkit-scrollbar-thumb {{ background: var(--border); border-radius: 3px; }}
   ::-webkit-scrollbar-thumb:hover {{ background: #4B5563; }}
 
   /* Header */
@@ -459,7 +535,7 @@ def index():
     background: rgba(12, 1, 56, 0.85);
     backdrop-filter: blur(16px) saturate(1.5);
     -webkit-backdrop-filter: blur(16px) saturate(1.5);
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid var(--border);
     padding: 0 2rem;
   }}
   .header-inner {{
@@ -481,12 +557,12 @@ def index():
     padding: 0.4rem 1rem; border-radius: 6px;
     font-size: 0.8rem; font-weight: 500;
     background: transparent; color: #94a3b8;
-    border: 1px solid #334155; cursor: pointer;
+    border: 1px solid var(--border); cursor: pointer;
     transition: all 0.2s;
     text-decoration: none;
   }}
   .btn-logout:hover {{
-      background: #334155; color: #F1F5F9;
+      background: var(--surface-hover); color: var(--text-primary);
     }}
 
     /* Nav */
@@ -503,10 +579,10 @@ def index():
       transition: all 0.15s;
     }}
     .nav-btn:hover {{
-      background: #1F2937; color: #CBD5E1;
+      background: var(--surface); color: var(--text-secondary);
     }}
     .nav-btn.active {{
-      background: #1F2937; color: #438ECA;
+      background: var(--surface); color: var(--accent);
     }}
     .nav-btn svg {{
       width: 14px; height: 14px;
@@ -522,11 +598,11 @@ def index():
   }}
   .hero h1 {{
     font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
-    color: #438ECA;
+    color: var(--hero-title);
     margin-bottom: 0.5rem;
   }}
   .hero p {{
-    font-size: 0.7rem; color: #CBD5E1; max-width: 800px;
+    font-size: 0.7rem; color: var(--text-secondary); max-width: 800px;
     line-height: 1.6;
   }}
 
@@ -536,15 +612,15 @@ def index():
   }}
   .search-input {{
     width: 100%; padding: 0.65rem 1rem;
-    background: #1F2937; border: 1px solid #334155;
-    border-radius: 10px; color: #F1F5F9;
+    background: var(--input-bg); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text-primary);
     font-size: 0.95rem; font-family: 'Inter', sans-serif;
     outline: none; transition: all 0.2s;
   }}
   .search-input:focus {{
-    border-color: #438ECA; box-shadow: 0 0 0 3px #438ECA22;
+    border-color: var(--accent); box-shadow: 0 0 0 3px var(--selection);
   }}
-  .search-input::placeholder {{ color: #94A3B8; }}
+  .search-input::placeholder {{ color: var(--text-muted); }}
 
   /* Filter chips */
   .filter-bar {{
@@ -554,14 +630,14 @@ def index():
   .filter-chip {{
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.25rem 0.7rem;
-    background: #1F2937; border: 1px solid #334155;
+    background: var(--surface); border: 1px solid var(--border);
     border-radius: 20px;
-    font-size: 0.7rem; font-weight: 500; color: #CBD5E1;
+    font-size: 0.7rem; font-weight: 500; color: var(--text-secondary);
     cursor: pointer; transition: all 0.15s;
     user-select: none;
   }}
   .filter-chip:hover {{
-    border-color: #4B5563;
+    border-color: var(--surface-hover);
   }}
   .filter-chip.active {{
     background: rgba(67,142,202,0.15);
@@ -600,7 +676,7 @@ def index():
       margin-right: 0.5rem;
     }}
     .section-indicator {{
-        font-size: 0.55rem; color: #4B5563;
+        font-size: 0.55rem; color: var(--text-muted);
         flex-shrink: 0;
         line-height: 1;
         transition: color 0.15s;
@@ -629,7 +705,7 @@ def index():
     display: flex; align-items: center; gap: 1.5rem;
   }}
   .card:hover {{
-    border-color: #4B5563;
+    border-color: var(--surface-hover);
     transform: translateY(-1px);
     box-shadow: 0 8px 25px -6px rgba(0,0,0,0.3);
   }}
@@ -637,25 +713,25 @@ def index():
     flex: 1; min-width: 0;
   }}
   .card-title {{
-    font-size: 0.82rem; font-weight: 600; color: #f1f5f9;
+    font-size: 0.82rem; font-weight: 600; color: var(--text-primary);
     margin-bottom: 0.25rem;
     line-height: 1.4;
   }}
   .card-desc {{
-    font-size: 0.7rem; color: #CBD5E1;
+    font-size: 0.7rem; color: var(--text-secondary);
     line-height: 1.5;
   }}
   .card-link {{
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.35rem 0.8rem;
-    background: #438ECA; color: #0F172A;
+    background: var(--accent); color: #0F172A;
     border-radius: 6px;
     font-size: 0.65rem; font-weight: 600;
     text-decoration: none; transition: all 0.2s;
     flex-shrink: 0;
   }}
   .card-link:hover {{
-    background: #5A9ED4; transform: translateY(-1px);
+    background: var(--accent-hover); transform: translateY(-1px);
   }}
   .card-link svg {{
     width: 14px; height: 14px; flex-shrink: 0;
@@ -664,14 +740,14 @@ def index():
   /* No results */
   .no-results {{
     text-align: center; padding: 3rem;
-    color: #94A3B8; font-size: 0.95rem;
+    color: var(--text-muted); font-size: 0.95rem;
   }}
 
   /* Stats footer */
   .stats {{
     text-align: center; padding: 2rem 0;
-    font-size: 0.78rem; color: #4B5563;
-    border-top: 1px solid #334155;
+    font-size: 0.78rem; color: var(--text-muted);
+    border-top: 1px solid var(--border);
     margin-top: 2rem;
   }}
 
@@ -703,6 +779,7 @@ def index():
     </div>
     <div class="header-actions">
       <span class="user-email" id="userEmail">{user_email}</span>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" style="background:transparent;border:1px solid var(--border);border-radius:6px;padding:0.25rem 0.4rem;cursor:pointer;font-size:0.8rem;line-height:1;color:var(--text-muted)">&#9790;</button>
       <a href="/logout" class="btn-logout">Sign out</a>
     </div>
   </div>
@@ -921,6 +998,21 @@ function setupSearch() {{
   }});
 }}
 
+// Theme toggle
+const THEME_KEY = 'str_theme';
+function initTheme() {{
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light') document.body.classList.add('light-mode');
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.innerHTML = document.body.classList.contains('light-mode') ? '&#9728;' : '&#9790;';
+}}
+function toggleTheme() {{
+  document.body.classList.toggle('light-mode');
+  localStorage.setItem(THEME_KEY, document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.innerHTML = document.body.classList.contains('light-mode') ? '&#9728;' : '&#9790;';
+}}
+initTheme();
 loadBookmarks();
 </script>
 </body>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light Mode Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F172A;
+    --surface: #1F2937;
+    --surface-hover: #334155;
+    --text-primary: #F1F5F9;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border: #334155;
+    --accent: #438ECA;
+    --accent-hover: #5A9ED4;
+    --header-bg: rgba(15, 23, 42, 0.85);
+    --card-bg: #1F2937;
+    --input-bg: #1F2937;
+    --shadow: rgba(0,0,0,0.3);
+    --header-border: #334155;
+  }
+
+  body.light {
+    --bg: #FFFFFF;
+    --surface: #F1F5F9;
+    --surface-hover: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --border: #E2E8F0;
+    --accent: #438ECA;
+    --accent-hover: #5A9ED4;
+    --header-bg: rgba(30, 41, 59, 0.95);
+    --card-bg: #F8FAFC;
+    --input-bg: #F1F5F9;
+    --shadow: rgba(0,0,0,0.08);
+    --hero-title: #0F172A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  /* Toggle bar */
+  .toggle-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: center; gap: 1rem;
+    padding: 0.5rem;
+    background: #1E293B; color: #94A3B8;
+    font-size: 0.75rem;
+  }
+  .toggle-bar button {
+    padding: 0.3rem 1rem; border-radius: 6px;
+    border: 1px solid #475569; background: transparent;
+    color: #CBD5E1; cursor: pointer; font-family: inherit;
+    font-size: 0.75rem; font-weight: 500;
+  }
+  .toggle-bar button.active {
+    background: #438ECA; border-color: #438ECA; color: white;
+  }
+
+  .body-wrap { padding-top: 36px; }
+
+  .header {
+    position: sticky; top: 36px; z-index: 100;
+    background: var(--header-bg);
+    backdrop-filter: blur(16px) saturate(1.5);
+    border-bottom: 1px solid var(--header-border);
+    padding: 0 2rem;
+  }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .logo { display: flex; align-items: center; }
+  .logo-placeholder {
+    background: #438ECA; color: white;
+    padding: 0.2rem 0.5rem; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 700;
+  }
+  .header-nav { display: flex; align-items: center; gap: 0.25rem; }
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.3rem 0.7rem; border-radius: 6px;
+    font-size: 0.75rem; font-weight: 500;
+    color: #94A3B8; text-decoration: none;
+  }
+  .nav-btn.active { background: var(--surface); color: var(--accent); }
+  .header-actions { display: flex; align-items: center; gap: 1rem; }
+  .user-email { font-size: 0.75rem; color: var(--text-muted); }
+  .btn-signout {
+    padding: 0.35rem 0.85rem; border-radius: 6px;
+    font-size: 0.75rem; font-weight: 500;
+    background: transparent; color: #94A3B8;
+    border: 1px solid var(--border); cursor: pointer;
+    text-decoration: none; transition: all 0.15s;
+    font-family: inherit;
+  }
+  .theme-toggle {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.3rem 0.5rem;
+    cursor: pointer; font-size: 0.85rem; line-height: 1;
+    transition: all 0.15s;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 3rem; }
+  .hero { margin-bottom: 1.5rem; }
+  .hero h1 {
+    font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--accent); margin-bottom: 0.25rem;
+  }
+  .hero p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+  .search-input {
+    width: 100%; padding: 0.65rem 1rem;
+    background: var(--input-bg); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text-primary);
+    font-size: 0.85rem; font-family: 'Inter', sans-serif;
+    outline: none; transition: all 0.2s;
+    margin-bottom: 1rem;
+  }
+  .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(67,142,202,0.15); }
+
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .filter-chip {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.25rem 0.7rem;
+    background: var(--input-bg); border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.7rem; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; user-select: none;
+  }
+  .filter-chip.active { background: rgba(67,142,202,0.12); border-color: var(--accent); color: var(--accent); }
+
+  .section { margin-bottom: 1.25rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; user-select: none;
+  }
+  .section-indicator { font-size: 0.55rem; color: var(--text-muted); flex-shrink: 0; }
+  .section-title { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .section-count { font-size: 0.65rem; color: var(--text-muted); margin-left: auto; margin-right: 0.5rem; }
+
+  .card-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 0.75rem 1.25rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    transition: all 0.15s;
+  }
+  .card:hover { border-color: var(--surface-hover); transform: translateY(-1px); box-shadow: 0 4px 12px var(--shadow); }
+  .card-body { flex: 1; min-width: 0; }
+  .card-title { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
+  .card-desc { font-size: 0.7rem; color: var(--text-secondary); line-height: 1.5; }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    background: var(--accent); color: white;
+    border-radius: 6px; font-size: 0.65rem; font-weight: 600;
+    text-decoration: none; flex-shrink: 0;
+  }
+  .card-link svg { width: 12px; height: 12px; }
+
+  .stats { text-align: center; padding: 1.5rem 0; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 1.5rem; }
+
+  .color-label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-size: 0.65rem; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+<div class="toggle-bar">
+  <span>Preview:</span>
+  <button id="btnDark" class="active">Dark Mode</button>
+  <button id="btnLight">Light Mode</button>
+</div>
+
+<div class="body-wrap" id="app">
+<div class="header">
+  <div class="header-inner">
+    <div class="logo"><span class="logo-placeholder">CASAGO</span></div>
+    <div class="header-nav">
+      <a class="nav-btn active">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        Bookmarks
+      </a>
+      <a class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+    </div>
+    <div class="header-actions">
+      <span class="user-email">quinn@roofstock.com</span>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+      <a class="btn-signout">Sign out</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <h1>STR Bookmarks</h1>
+    <p>Quick-access directory of tools, docs, and resources across every department.</p>
+  </div>
+  <input class="search-input" placeholder="Search bookmarks by title, section, or description…">
+
+  <div class="filter-bar">
+    <span class="filter-chip active"><span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block"></span> Revenue</span>
+    <span class="filter-chip active"><span style="width:8px;height:8px;border-radius:50%;background:#3b82f6;display:inline-block"></span> Openings</span>
+    <span class="filter-chip active"><span style="width:8px;height:8px;border-radius:50%;background:#a855f7;display:inline-block"></span> Market Ops</span>
+    <span class="filter-chip active"><span style="width:8px;height:8px;border-radius:50%;background:#f97316;display:inline-block"></span> Guest Experience</span>
+    <span class="filter-chip active"><span style="width:8px;height:8px;border-radius:50%;background:#06b6d4;display:inline-block"></span> Owner Success</span>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-indicator">▼</span>
+      <span class="section-title">Revenue</span>
+      <span class="section-count">5 bookmarks</span>
+    </div>
+    <div class="card-list">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">📊 Min Price + Reservations Viewer</div>
+          <div class="card-desc">View min rate settings and rules for individual listings with live reservation data.</div>
+        </div>
+        <a class="card-link">Open <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">📄 Dynamic Pricing 101</div>
+          <div class="card-desc">Internal guide on how revenue is built over time with FAQs.</div>
+        </div>
+        <a class="card-link">Open <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-indicator">▶</span>
+      <span class="section-title">Openings</span>
+      <span class="section-count">1 bookmark</span>
+    </div>
+    <div class="card-list" style="display:none">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">🔗 Home Owner Referral Form</div>
+          <div class="card-desc">Submit referrals of new homeowners and get paid when the home goes live.</div>
+        </div>
+        <a class="card-link">Open <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">7 bookmarks across 2 departments</div>
+</div>
+</div>
+
+<script>
+const body = document.body;
+const btnDark = document.getElementById('btnDark');
+const btnLight = document.getElementById('btnLight');
+const themeToggle = document.getElementById('themeToggle');
+
+function setTheme(mode) {
+  body.classList.toggle('light', mode === 'light');
+  btnDark.classList.toggle('active', mode === 'dark');
+  btnLight.classList.toggle('active', mode === 'light');
+  themeToggle.textContent = mode === 'light' ? '☀️' : '🌙';
+}
+
+btnDark.addEventListener('click', () => setTheme('dark'));
+btnLight.addEventListener('click', () => setTheme('light'));
+themeToggle.addEventListener('click', () => {
+  setTheme(body.classList.contains('light') ? 'dark' : 'light');
+});
+</script>
+</body>
+</html>
